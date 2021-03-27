@@ -1,2 +1,2 @@
 # Matlab_codes
-Assignment codes in Design optimization, Flight Dynamics and Control and Computational Fluid Dynamics
+Hello! I am Srinivasan. I like to programme my academic assignments and I share them as referece for fellow students. 
