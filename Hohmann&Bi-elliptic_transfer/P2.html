@@ -1,0 +1,234 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>P2</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-11-30"><meta name="DC.source" content="P2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Bi-elliptic transfer for different circular orbits</a></li></ul></div><pre class="codeinput"><span class="comment">% Hohmann transfer for different circular orbits</span>
+clear
+clc
+r_I = 1000+6378;
+r_F = [131378,206378,306378];
+del_V = ones(1,3);
+fprintf(<span class="string">'Hohmann transfer \n'</span>);
+fprintf(<span class="string">'Velocity Impulse required for final orbit \n'</span>);
+<span class="keyword">for</span> i = 1:3
+del_V(i) = hohmann(r_F(i),r_I);
+
+fprintf(<span class="string">'%d km is %d km/s \n'</span>,r_F(i) - 6378,del_V(i));
+<span class="keyword">end</span>
+ <span class="comment">% As the orbit size increases, the velocity impulse required for in-plane</span>
+ <span class="comment">% orbital maneuver decreases, as lesser energy is required for higher</span>
+ <span class="comment">% orbits</span>
+</pre><pre class="codeoutput">Hohmann transfer 
+Velocity Impulse required for final orbit 
+125000 km is 3.938235e+00 km/s 
+200000 km is 3.888194e+00 km/s 
+300000 km is 3.814868e+00 km/s 
+</pre><h2 id="2">Bi-elliptic transfer for different circular orbits</h2><pre class="codeinput">fprintf(<span class="string">'\nBi-elliptic transfer \n'</span>);
+Transfer_Orbit = (150000:50000:500000)';
+del_V2 = zeros(size(Transfer_Orbit))';
+<span class="keyword">for</span> k = 1:3
+    <span class="keyword">for</span> j = 1:size(Transfer_Orbit)
+        del_V2(j) = bi(r_F(k),r_I,Transfer_Orbit(j));
+    <span class="keyword">end</span>
+    fprintf(<span class="string">'Variation of velocity impulse for final orbit %d'</span>,r_F(k)-6378);
+    Velocity_Impulse = del_V2';
+    T = table(Transfer_Orbit,Velocity_Impulse)
+    T.Properties.Description = <span class="string">'Transfer orbit in km; Velocity Impulse in km/s'</span>;
+    figure
+    plot(Transfer_Orbit,Velocity_Impulse);
+    xlabel(<span class="string">'Transfer Orbit (km)'</span>);
+    ylabel(<span class="string">'Velocity Impulse (km/s)'</span>);
+    title([<span class="string">'Velocity impulse vs Intermediate orbit radius for '</span>,num2str(r_F(k)-6378),<span class="string">' km orbit'</span>]);
+
+<span class="keyword">end</span>
+<span class="comment">% When we keep the intermediate orbit as constant and vary the Final oribt,</span>
+<span class="comment">% the impulse velocity increases with increase in final orbit size. The</span>
+<span class="comment">% reason is that the second transfer orbit size increases, which leads to</span>
+<span class="comment">% increase in impulse velocity during second and third orbit maneuver.</span>
+
+<span class="comment">% When we keep the final orbit as constant and vary the intermediate orbit</span>
+<span class="comment">% size, it is seen that velocity impulse reduces with increase in</span>
+<span class="comment">% intermediate orbit size. As the orbit size increases, impulse velocity</span>
+<span class="comment">% reduces in all the orbital maneuvers.</span>
+
+<span class="comment">% Another important aspect is mission time. When the intermediate orbit</span>
+<span class="comment">% size increases, impulse velocity required decreases, but the time of</span>
+<span class="comment">% travel increases. So the orbit should be selected according to mission</span>
+<span class="comment">%requirement</span>
+</pre><pre class="codeoutput">
+Bi-elliptic transfer 
+Variation of velocity impulse for final orbit 125000
+T =
+
+  8&times;2 table
+
+    Transfer_Orbit    Velocity_Impulse
+    ______________    ________________
+
+        150000        3.93079969901372
+        200000        3.91035570364212
+        250000        3.89280173483763
+        300000        3.87851727170086
+        350000         3.8669039199179
+        400000        3.85735852382118
+        450000        3.84940795667344
+        500000        3.84269935299377
+
+Variation of velocity impulse for final orbit 200000
+T =
+
+  8&times;2 table
+
+    Transfer_Orbit    Velocity_Impulse
+    ______________    ________________
+
+        150000        4.16781618730305
+        200000        3.91511051993041
+        250000        3.85787797728111
+        300000         3.8301954270066
+        350000        3.80810567585065
+        400000        3.79013527847681
+        450000         3.7752579146819
+        500000        3.76275129503654
+
+Variation of velocity impulse for final orbit 300000
+T =
+
+  8&times;2 table
+
+    Transfer_Orbit    Velocity_Impulse
+    ______________    ________________
+
+        150000        4.40353513159879
+        200000        4.16121217159121
+        250000        3.97660076950524
+        300000        3.83122689368967
+        350000        3.78824118711665
+        400000        3.76298847597407
+        450000        3.74201705554617
+        500000        3.72433204571193
+
+</pre><img vspace="5" hspace="5" src="P2_01.png" alt=""> <img vspace="5" hspace="5" src="P2_02.png" alt=""> <img vspace="5" hspace="5" src="P2_03.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Hohmann transfer for different circular orbits 
+clear 
+clc
+r_I = 1000+6378;
+r_F = [131378,206378,306378];
+del_V = ones(1,3);
+fprintf('Hohmann transfer \n');
+fprintf('Velocity Impulse required for final orbit \n');
+for i = 1:3
+del_V(i) = hohmann(r_F(i),r_I);
+
+fprintf('%d km is %d km/s \n',r_F(i) - 6378,del_V(i));
+end
+ % As the orbit size increases, the velocity impulse required for in-plane
+ % orbital maneuver decreases, as lesser energy is required for higher
+ % orbits
+
+%% Bi-elliptic transfer for different circular orbits
+fprintf('\nBi-elliptic transfer \n');
+Transfer_Orbit = (150000:50000:500000)';
+del_V2 = zeros(size(Transfer_Orbit))';
+for k = 1:3
+    for j = 1:size(Transfer_Orbit)
+        del_V2(j) = bi(r_F(k),r_I,Transfer_Orbit(j));
+    end
+    fprintf('Variation of velocity impulse for final orbit %d',r_F(k)-6378);
+    Velocity_Impulse = del_V2';
+    T = table(Transfer_Orbit,Velocity_Impulse)
+    T.Properties.Description = 'Transfer orbit in km; Velocity Impulse in km/s';
+    figure
+    plot(Transfer_Orbit,Velocity_Impulse);
+    xlabel('Transfer Orbit (km)');
+    ylabel('Velocity Impulse (km/s)');
+    title(['Velocity impulse vs Intermediate orbit radius for ',num2str(r_F(k)-6378),' km orbit']);
+   
+end
+% When we keep the intermediate orbit as constant and vary the Final oribt,
+% the impulse velocity increases with increase in final orbit size. The
+% reason is that the second transfer orbit size increases, which leads to
+% increase in impulse velocity during second and third orbit maneuver.
+
+% When we keep the final orbit as constant and vary the intermediate orbit
+% size, it is seen that velocity impulse reduces with increase in
+% intermediate orbit size. As the orbit size increases, impulse velocity
+% reduces in all the orbital maneuvers.
+
+% Another important aspect is mission time. When the intermediate orbit
+% size increases, impulse velocity required decreases, but the time of
+% travel increases. So the orbit should be selected according to mission
+%requirement
+
+  
+
+
+
+##### SOURCE END #####
+--></body></html>
